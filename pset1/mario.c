@@ -18,11 +18,13 @@ int main(void) {
 int validate(int height) {
     if (height > 23) {
         printf("Height must be no greater than 23.\n");
-        exit(1);
-    }
+        exit(0);
+    } 
     if (height <= 0) {
         exit(0);
     }
+
+    return 0;
 }
 
 int printChars(int length, char thechar) {
