@@ -2,7 +2,8 @@
 #include <string.h>
 #include <cs50.h>
 
-int printLine(int length);
+int printPyramids(int length);
+int printChars(int length, char thechar);
 int validate(int height);
 
 int main(void) {
@@ -10,10 +11,8 @@ int main(void) {
     int height = GetInt();
     validate(height);
 
-    for (int i = height; i > 0; i--) {
-        printLine(i);
-    }
-
+    printPyramids(height);
+    
     return 0;
 }
 
@@ -27,12 +26,28 @@ int validate(int height) {
     }
 }
 
-int printLine(int length) {
-    char line[40] = {'#', '\0'};
-    for (int i = length - 1; i > 0; i--) {
-        strcat(line, "#");
+int printChars(int length, char thechar) {
+    char line[40] = {'\0'};
+    char safe_string[2] = {thechar, '\0'};
+    for (int i = length; i > 0; i--) {
+        strcat(line, safe_string);
     }
-    printf("%s\n", line);
+    printf("%s", line);
      
     return 0;
 }
+
+int printPyramids(int height) {
+    int count = 1;
+    for (int i = height; i > 0; i--) {
+        printChars(height - count, ' ');
+        printChars(count, '#');
+        printChars(2, ' ');
+        printChars(count, '#');
+        printf("\n");
+        count += 1;
+    }
+
+    return 0;
+}
+
