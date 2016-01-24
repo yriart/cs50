@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <cs50.h>
 
 int printPyramids(int length);
@@ -27,12 +26,9 @@ int validate(int height) {
 }
 
 int printChars(int length, char thechar) {
-    char line[40] = {'\0'};
-    char safe_string[2] = {thechar, '\0'};
     for (int i = length; i > 0; i--) {
-        strcat(line, safe_string);
+        printf("%c", thechar);
     }
-    printf("%s", line);
      
     return 0;
 }
