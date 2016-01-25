@@ -2,33 +2,39 @@
 #include <cs50.h>
 #include <string.h>
 
+void populateInitials(int sourceStrLen, char *sourceStr, char *destStr);
 int isLowerCase(char theChar);
 char toUpperCase(char theChar);
 
 int main(void) {
-    string name = GetString();
+    char *name = GetString();
+    int nameLength = strlen(name);
+    char initials[nameLength + 1];
 
-    char initials[strlen(name)+1];
-    initials[0] = name[0];
-    int count = 1;
-    for (int i = 1, n = strlen(name); i < n; i++) {
-        if (name[i] == ' ') {
-            initials[count] = name[i+1];
-            count++;
-        }        
-    }
-    initials[count] = '\0';
-    
+    populateInitials(nameLength, name, initials);
+
     for (int j = 0, n = strlen(initials); j < n; j++) {
-        if (isLowerCase(initials[j]) == 1) {
+        if (isLowerCase(initials[j])) {
             initials[j] = toUpperCase(initials[j]);
         }
     }
-
     printf("%s\n", initials);
 
     return 0;
 }
+
+void populateInitials(int sourceStrLen, char *sourceStr, char *destStr) {
+    destStr[0] = sourceStr[0];
+    int destStrIndex = 1;
+    for (int i = 1; i < sourceStrLen; i++) {
+        if (sourceStr[i] == ' ') {
+            destStr[destStrIndex] = sourceStr[i + 1];
+            destStrIndex++;
+        }        
+    }
+    destStr[destStrIndex] = '\0';
+}
+ 
 
 int isLowerCase(char theChar) {
     // use ASCII table values to check case
