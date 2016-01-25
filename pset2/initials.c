@@ -12,7 +12,9 @@ int main(void) {
     char *name = GetString();
     int nameLength = strlen(name);
     char normalizedName[nameLength + 1];
+    memset(normalizedName, 0, nameLength + 1);
     char initials[nameLength + 1];
+    memset(initials, 0, nameLength + 1);
 
     stripInvalidChars(nameLength, name, normalizedName);
     populateInitials(nameLength, normalizedName, initials);
