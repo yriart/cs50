@@ -5,6 +5,8 @@
 
 int isLowerCase(char theChar);
 int isUpperCase(char theChar);
+void encryptString(char *sourceStr, char *destStr, int key);
+char encryptChar(char sourceChar, int lowerASCIILimit, int upperASCIILimit, int key);
 
 int main(int argc, string argv[]) {
     int key;
@@ -18,30 +20,10 @@ int main(int argc, string argv[]) {
     char *sourceStr = GetString();
     int length = strlen(sourceStr);
     char destStr[length + 1];
-    for (int i = 0; i < length; i++) {
-        if (isLowerCase(sourceStr[i])) {
-            int added = (int) sourceStr[i] + key;
-            if (added > 122) {
-                destStr[i] = (char) ((added % 122) + 96);
-            } else {
-                destStr[i] = (char) added;
-            }
-        } else if (isUpperCase(sourceStr[i])) {
-            int added = (int) sourceStr[i] + key;
-            if (added > 90) {
-                destStr[i] = (char) ((added % 90) + 64);
-            } else {
-                destStr[i] = (char) added;
-            }
-        } else {
-            destStr[i] = sourceStr[i];
-        }
-    }
-    destStr[length] = '\0';
 
+    encryptString(sourceStr, destStr, key);
     printf("%s\n", destStr);
 
-    free(sourceStr);
     return 0;
 }
 
@@ -59,4 +41,29 @@ int isUpperCase(char theChar) {
     } else {
         return 0;
     }
+}
+
+char encryptChar(char sourceChar, int lowerASCIILimit, int upperASCIILimit, int key) {
+    char encryptedChar;
+    int added = (int) sourceChar + key;
+    if (added > upperASCIILimit) {
+        encryptedChar = (char) ((added % upperASCIILimit) + (lowerASCIILimit - 1));
+    } else {
+        encryptedChar = (char) added;
+    }
+    return encryptedChar;
+}
+
+void encryptString(char *sourceStr, char *destStr, int key) {
+    int length = strlen(sourceStr);
+    for (int i = 0; i < length; i++) {
+        if (isLowerCase(sourceStr[i])) {
+            destStr[i] = encryptChar(sourceStr[i], 97, 122, key);
+        } else if (isUpperCase(sourceStr[i])) {
+            destStr[i] = encryptChar(sourceStr[i], 65, 90, key);
+        } else {
+            destStr[i] = sourceStr[i];
+        }
+    }
+    destStr[length] = '\0';
 }
